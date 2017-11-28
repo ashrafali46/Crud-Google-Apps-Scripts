@@ -19,14 +19,9 @@ function doGet(e){
   if(op=="delete")
     return delete_value(e,sheet);
 
-
-
 }
 
 //Recieve parameter and pass it to function to handle
-
-
-
 
 function insert_value(request,sheet){
 
@@ -66,12 +61,7 @@ function insert_value(request,sheet){
   .setMimeType(ContentService.MimeType.JAVASCRIPT);
   }
 
-
-
-
-
 function read_value(request,ss){
-
 
   var output  = ContentService.createTextOutput(), data    = {};
   //Note : here sheet is sheet name , don't get confuse with other operation
@@ -116,8 +106,6 @@ function readData_(ss, sheetname, properties) {
   return data;
 }
 
-
-
 function getDataRows_(ss, sheetname) {
   var sh = ss.getSheetByName(sheetname);
 
@@ -130,27 +118,25 @@ function getHeaderRow_(ss, sheetname) {
 
   return sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
 }
-
-
 //update function
 
 function update_value(request,sheet){
 
 var output  = ContentService.createTextOutput();
    var id = request.parameter.id;
-  var flag=0;
+  var flag = 0;
   var country = request.parameter.name;
-  var lr= sheet.getLastRow();
-  for(var i=1;i<=lr;i++){
+  var lr = sheet.getLastRow();
+  for(var i = 1;i <= lr;i++){
     var rid = sheet.getRange(i, 2).getValue();
-    if(rid==id){
+    if(rid == id){
       sheet.getRange(i,3).setValue(country);
-      var result="value updated successfully";
-      flag=1;
+      var result = "value updated successfully";
+      flag = 1;
     }
 }
-  if(flag==0)
-    var result="id not found";
+  if(flag == 0)
+    var result = "id not found";
 
    result = JSON.stringify({
     "result": result
@@ -160,37 +146,24 @@ var output  = ContentService.createTextOutput();
   .createTextOutput(request.parameter.callback + "(" + result + ")")
   .setMimeType(ContentService.MimeType.JAVASCRIPT);
 
-
 }
-
-
-
-
 function delete_value(request,sheet){
 
-  var output  = ContentService.createTextOutput();
+  var output = ContentService.createTextOutput();
    var id = request.parameter.id;
   var country = request.parameter.name;
-  var flag=0;
-
-
-
-  var lr= sheet.getLastRow();
-  for(var i=1;i<=lr;i++){
+  var flag = 0;
+  var lr = sheet.getLastRow();
+  for(var i = 1;i <= lr;i++){
     var rid = sheet.getRange(i, 2).getValue();
-    if(rid==id){
+    if(rid == id){
       sheet.deleteRow(i);
       var result="value deleted successfully";
-      flag=1;
+      flag = 1;
     }
-
   }
-
-  if(flag==0)
+  if(flag == 0)
     var result="id not found";
-
-
-
    result = JSON.stringify({
     "result": result
   });
